@@ -31,6 +31,7 @@ screen escape_only_movie(movie_file):
     add Movie(play=movie_file, loop=False)
     key "K_ESCAPE" action Return()
 
+
 label sus_increased: # bad
     $ sus += 1
     "Suspicions towards you is increased!"
@@ -53,9 +54,10 @@ label unsus_increased: # good
 #      call unsus_ending #ending 1 (good)
 #   elif compassion == 9:
 #      call mid_ending #ending 2(mid)
+ 
 
-
-
+transform half_size:
+        zoom 0.5
 
 label start:
     scene bg black
@@ -241,7 +243,7 @@ elif povname == "Sarah":
         scene bg black
         pause 5
 
-        scene bg benchy
+        scene bg bar
         with fade
 
         show c normal
@@ -249,7 +251,11 @@ elif povname == "Sarah":
 
         cc "Dragging me all the way out here won't change my mind, Creed."
 
-        lore "I'm done trying to change your mind,{w} Sarah..{w} but you have to let me to do things the proper way."
+        cc "The Crew is dead{w} and a whole damn Organization is about to expose us and wipe our goddamn memory.."
+
+        cc "I'm doing this.."
+
+        lore "I'm done trying to change your mind,{w} Sarah..{w} but you have to let me handle this properly, please!"
 
         cc "I already let you handle things your way..{w} you have to realize that there is no other way...{w} it's either this, or we both forget each other."
 
@@ -267,7 +273,7 @@ elif povname == "Sarah":
 
         cc "Let's make something clear, you idiot..{w} No one's doing any sacrificing in this situation..{w}"
 
-        cc "I'M{w} taking fall, so they don't target you and vaporize your memories,{w} so you can find me again,{w} and make me remember!"
+        cc "I'M{w} taking the fall, so they don't target you and vaporize your memories,{w} so you can find me again,{w} and make me remember!"
 
         lore "Make you remember?! How the hell do you think I'm supposed to make you remember?!"
 
@@ -344,7 +350,9 @@ elif povname == "Sarah":
         cc "Don't forget me.."
 
         hide c normal 
-        with fade
+        with dissolve
+
+        pause 2
 
         stop music fadeout 2.0
         play music "NocturneCB.mp3" volume 0.3
@@ -363,6 +371,16 @@ elif povname == "Sarah":
 
         pov "It's nothing.."
 
+        hide host normal
+        show host happy
+        with dissolve
+
+        u "Ah, yes...{w} good'ole nothing."
+
+        u "People can never just be \'nothing\', [povname].{w} They deserve a place in your memory.."
+
+        pause 2
+
         stop music fadeout 2.0
         scene bg black
         with fade
@@ -371,15 +389,13 @@ elif povname == "Sarah":
         $ renpy.music.set_volume(0.3, delay=0, channel='movie')
         call screen escape_only_movie("images/movies/neon.webm")
 
+        play music "NocturneCB.mp3" volume 0.3
         show bg stretch
         with fade
         call unsus_increased
-        show host happy
-        with dissolve
 
-        u "Ah, yes...{w} good'ole nothing."
+        pause 2
 
-        hide host happy
         show host normal
         with dissolve
 
@@ -614,7 +630,7 @@ label Meeting:
     stop music fadeout 2.0
 
     scene bg black
-    play music "Cyberpunk 2077 soundtrack - Nocturne Op. 55 No. 1 (Chopin).mp3" volume 0.22
+    play music "Cyberpunk 2077 soundtrack - Nocturne Op. 55 No. 1 (Chopin).mp3" volume 0.32
     "You were led to a room, where it's door is just as identical as the few hundreds more of it's same design back in the hall."
 
     "You think to yourself of how simple as a hall of doors sounds as a foundation for caution is...{w} yet how simultaneously effective it is."
@@ -633,136 +649,7 @@ label Meeting:
 
     host "To the Altruist Playground!"
 
-    jump Discussion1
-
-
-
-label Discussion1:
-"As you entered the dark room, you could sense their eyes staring into you, like knives on you skin, while you are guided to your seat"
-
-"When you finally sat down, you start laying the foundation of your plans of assassination...{w} hard as it may be, you still look for the best ways to establish a workaround for a few scenarios in your head."
-
-host "Greetings my dear guests, now that everyone has arrived and seated let's get this show on the road, Shall we?{w} First things first, let me say that-"
-
-"*Ring ring ring*{w} *Ring ring ring*{w} *Ring ring ring*{w} "
-
-host "Oh! Apologies that's mine.{w} Yes?{w} Mhmm.{w} What about them?{w} What do you mean???{w} Fine I'll get there as soon as I can"
-
-"*Hangs up*"
-
-host "MY deepest apologies dearest guests, but there are things that need my attention at the moment...{w} I will return shortly and the meeting will resume"
-
-"*Leaves*"
-
-"When they left, it was only you 6 in the room silenty sitting there in the room"
-
-"What will you do?"
-
-menu:
-
-    "-Converse-":
-        jump converse1
-    "-Hush-":
-        jump skip1
-
-label converse1:
-    call screen ConvoScreen
-        
-label Mari1:
-    m "In the history of football, not a single nation has been better at it than Brazil.{w} We have won five World Cup titles,{w} and they remain the only team to have participated at every edition of the tournament."
-    m "How about you, [povname]? Do you know anything about Football?"
-
-    menu:
-        "Yep, I love watching the game whenever the world cup comes around":
-            pov "Yep, I love watching the game whenever the world cup comes around"
-            m "Hah, you're quite the pleasant one, [povname]!"
-            call unsus_increased
-            jump converse1
-        "Hell yeah I do! I used to qb at my college football team":
-            pov "Hell yeah I do! I used to qb at my college football team"
-            m "Ugh, American Football?{w} I see how it is..."
-            call sus_increased
-            jump converse1
-
-
-label Luna1:
-    l "*on her phone* You Kurwa even on this bloody device I can tell how offbeat you are{w}, for the tenth the time,{w} NOT{w} MY{w} FUCKING{w} TEMPO"
-    l "Amateurs..{w} They call themselves musicians yet they can't even keep a steady rhythm..{w} What a joke."
-    menu:
-        "Yeah, pretty laughable. You'd think they'd practice more":
-            l "Hah, finally someone who understands, [povname]!"
-            call unsus_increased
-            jump converse1
-        "Hey, maybe cut them some slack? No one is perfect":
-            l "Tch, which is why not everyone is cut out to be a musician.."
-            call sus_increased
-            jump converse1
-
-label Wyatt1:
-    w "Roll for initiative, Mortal HAHA{w} I am the great Wolfkind, Fenrir. But you can call me the Dungeon Master"
-    w "Hey after this you wanna join the campaign I'm dm-ing?"
-    menu:
-        "Yeah sure":
-            w "AWESOME, I CAN'T WAIT, I wonder what role you'll use, [povname]!"
-            call unsus_increased
-            jump converse1
-        "Oh um Sorry I'll be busy":
-            w "oh I see how it is..."
-            call sus_increased
-            jump converse1
-
-label Jecyka1:
-    j "I am COACH, I am biggest and strongest here HAHA"
-    j "HAHA, Look at my big strong muscles, [povname]!{w} You think you can take me on?"
-    menu:
-        "Haha no, You can probably pick me up like a bunch of grapes":
-            j "HAH, you humor, Coach. I like you, [povname]!"
-            jump converse1
-        "Alright easy there, Hulk. No need to get aggressive":
-            j "Hay, seems like you don't respect Coach."
-            call sus_increased
-            jump converse1
-
-label Cill1:
-    c "Where is that fool, we were supposed to start like 10 minutes ago"
-    c "My bosses will not be pleased if we don't get what we came for"
-    menu:
-        "You're right, we should've already started":
-            c "At least someone here has some sense"      
-            jump converse1
-        "What's the rush? We're all just sitting here anyway, why do you need the kids these fast anyway?":
-            c "Hmph, That's classified information."
-            call sus_increased
-            jump converse1
-
-label finish1:
-    "Talking with everyone in the room was quite...{w} enlightening."
-    "Perhaps you can use what you've learned to your advantage later on{w} who knows?"
-    jump Event1
-
-label skip1:
-    "You decided to stay silent... You all just sat there around the table, in the dark room."
-    "minutes felt like centuries as the moments passed{w}"
-
-label Event1:
-    "After what felt like an eternity, you hear footsteps approaching the room again.{w} The Altruist Host returns, with food as well. Carried by...{w} manipulated children...{w} They needed to be stopped"
-    "As one of the children puts the covered trays on the table, they remove the covers to show a folded piece of paper on each tray."
-    
-    host "I thought we should all have something to do while we wait for food, so I prepared a couple of Riddles for you all to solve, how does that sound?"
-    host "Bon appétit! I hope you all enjoy it!"
-
-    "You have no other choice but to play along..."
-
-    "Riddle 1: What is finished but never complete, played but never won and made by people who thought they'd finish in time"
-    "..."
-    "..."
-    "..."
-    "..."
-
     jump quit
-    
-
-    
     
 
 
@@ -774,6 +661,13 @@ label quit:
     play music "images/Cyberpunk x Vicetone - Never Fade Away (Vicetone Remix).mp3" volume 0.4
     scene bg demo
     pause 180
+
+
+
+
+
+
+
 
 
     return
